@@ -9,8 +9,9 @@ export default {
       title: "Post Title",
     },
     {
-      name: "children",
+      name: "childPosts",
       type: "array",
+      title: "Child Posts",
       of: [
         {
           type: "reference",
