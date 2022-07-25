@@ -12,8 +12,8 @@ const config: GatsbyConfig = {
   plugins: [{
     resolve: 'gatsby-source-sanity',
     options: {
-      "projectId": "",
-      "dataset": ""
+      "projectId": "tqppuesf",
+      "dataset": "production"
     }
   }, "gatsby-plugin-postcss"]
 };
