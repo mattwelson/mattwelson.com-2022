@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .grid-content {
+    @apply grid grid-cols-content [&>*]:col-start-2;
+  }
+
+  .full-bleed {
+    @apply col-start-1 col-end-4;
+  }
+}

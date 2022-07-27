@@ -1,50 +1,36 @@
 import * as React from "react";
 import { graphql, Link, PageProps } from "gatsby";
+import Layout from "../components/layouts/layout";
 
-type PageData = {
-  allSanityPost: {
-    posts: Array<{
-      title: string;
-      id: string;
-    }>;
-  };
-};
-
-const IndexPage = ({ data }: PageProps<PageData>) => {
+const IndexPage = ({ data }: PageProps<Queries.GetRootPostsQuery>) => {
   const [firstPost, ...otherPosts] = data.allSanityPost.posts;
   return (
-    <div>
-      <header>
-        <div className="font-serif text-lg font-bold text-red-700">
-          <Link to="/">Matt Welson</Link>
-        </div>
-      </header>
-      <main>
-        {/* TODO: Featured blog post */}
-        <div>
+    <Layout>
+      {/* TODO: Featured blog post */}
+      <div>
+        <Link to={`${firstPost.slug?.current}`}>
           <h1 className="font-serif text-xl font-bold">{firstPost.title}</h1>
-        </div>
-        {/* TODO: Blog posts */}
-        <div>
-          {otherPosts.map(({ title }) => (
-            <div>
-              <h2 className="font-serif text-lg font-bold">{title}</h2>
-            </div>
-          ))}
-        </div>
-      </main>
-    </div>
+        </Link>
+      </div>
+      {/* TODO: Blog posts */}
+      <div>
+        {otherPosts.map(({ title, id, slug }) => (
+          <Link key={id} to={`${slug?.current}`}>
+            <h2 className="font-serif text-lg font-bold">{title}</h2>
+          </Link>
+        ))}
+      </div>
+    </Layout>
   );
 };
 
 export default IndexPage;
 
 export const query = graphql`
-  {
+  query GetRootPosts {
     allSanityPost {
       posts: nodes {
-        title
-        id
+        ...SanityPostDetailsFull
       }
     }
   }

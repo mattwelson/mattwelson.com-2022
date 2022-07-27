@@ -1,4 +1,5 @@
 import type { GatsbyNode } from "gatsby";
+import path from "path";
 
 // Add a parentPost field and resolve it for SanityPosts
 // Note: @link didn't seem to work in this case
@@ -34,32 +35,42 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     createTypes(typeDefs);
   };
 
-export const createPages: GatsbyNode["createPages"] = ({
+export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions: { createPage },
 }) => {
+  const template = path.resolve(`./src/components/layouts/PostLayout.tsx`)
   // TODO:
   // Query for allSanityPosts
   // Iterate over all that do not have a parent as a "root" page,
   // then iterate over remaining with their full paths (recursion?)
   // how do I get the childPosts recursively?
-  const sanityPosts = graphql(`
-    {
+  const rootPosts = await graphql<Queries.GetRootPostsQuery>(`
+    query GetRootPostsClone {
       allSanityPost {
-        nodes {
+        posts: nodes {
           id
           slug {
             current
           }
-          parentPost
+          parentPost {
+            id
+          }
           childPosts {
             id
-            slug {
-              current
-            }
           }
         }
       }
     }
   `);
+  rootPosts.data?.allSanityPost.posts.forEach(({ slug, id }) => {
+    if (!slug?.current) return
+    createPage({
+      path: `/${slug?.current}`,
+      component: template,
+      context: {
+        id,
+      },
+    })
+  });
 };
