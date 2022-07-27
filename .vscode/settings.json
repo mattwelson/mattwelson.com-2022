@@ -8,6 +8,12 @@
   "[javascriptreact]": {
     "editor.formatOnSave": false
   },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   // show eslint icon at bottom toolbar
   "eslint.alwaysShowStatus": true,
   // tell the ESLint plugin to run on save

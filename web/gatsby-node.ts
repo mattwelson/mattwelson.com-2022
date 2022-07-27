@@ -42,11 +42,22 @@ export const createPages: GatsbyNode["createPages"] = ({
   // Query for allSanityPosts
   // Iterate over all that do not have a parent as a "root" page,
   // then iterate over remaining with their full paths (recursion?)
+  // how do I get the childPosts recursively?
   const sanityPosts = graphql(`
     {
       allSanityPost {
         nodes {
           id
+          slug {
+            current
+          }
+          parentPost
+          childPosts {
+            id
+            slug {
+              current
+            }
+          }
         }
       }
     }

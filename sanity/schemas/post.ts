@@ -2,6 +2,13 @@ export default {
   name: "post",
   type: "document",
   title: "Post",
+  fieldsets: [
+    {
+      name: 'childPostGroup', title: 'Child Posts', options: {
+        collapsible: true,
+        collapsed: false
+      }
+    }],
   fields: [
     {
       name: "title",
@@ -19,9 +26,28 @@ export default {
       },
     },
     {
+      name: 'category',
+      title: 'Category',
+      type: 'reference',
+      to: [
+        { type: 'category' }
+      ]
+      // TODO: validation
+      // TODO: Automatically initialise with category of parent
+      // TODO: default to uncategorized?
+    },
+    {
+      name: 'childPostsTitle',
+      type: 'string',
+      title: 'Title',
+      description: 'The title to be shown next to groups of child posts',
+      initialValue: 'Related',
+      fieldset: 'childPostGroup'
+    },
+    {
       name: "childPosts",
       type: "array",
-      title: "Child Posts",
+      title: "Posts",
       of: [
         {
           type: "reference",
@@ -30,8 +56,19 @@ export default {
               type: "post",
             },
           ],
+          options: {
+            // TODO: Add filter to only show unparented posts, and not itself. Example query
+            /* *[_type=="post"]{
+                ...,
+                "parents": *[_type=='post' && references(^._id)]{ 
+                  title
+                }
+              }[count(parents) == 0]
+            */
+          }
         },
       ],
+      fieldset: 'childPostGroup'
     },
     {
       name: "image",
@@ -48,6 +85,9 @@ export default {
         },
         {
           type: "metaimage",
+        },
+        {
+          type: "imagecollection",
         },
       ],
     },
