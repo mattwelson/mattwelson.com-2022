@@ -1,28 +1,32 @@
-import * as React from "react"
-import { graphql, PageProps } from "gatsby"
-import { PortableText } from "@portabletext/react"
-import Layout from "./layout"
-import HeroSection from "../post/HeroSection"
+import * as React from "react";
+import { graphql, PageProps } from "gatsby";
+import { PortableText } from "@portabletext/react";
+import Layout from "./layout";
+import HeroSection from "../post/HeroSection";
+import PostList from "../post/PostList";
 
 const PostLayout = ({
   data: { sanityPost },
 }: PageProps<Queries.GetPostQuery>) => {
-  if (!sanityPost) return "Ooops no post!"
+  if (!sanityPost) return "Ooops no post!";
   return (
     <Layout>
-      <div className='mt-16' />
+      <div className="mt-16" />
       <HeroSection post={sanityPost} />
       {sanityPost._rawContent && (
         <PortableText value={sanityPost._rawContent} />
       )}
-      <h2 className='font-serif text-lg font-bold'>
-        {sanityPost.childPostsTitle}
-      </h2>
+      {!!sanityPost.childPosts?.length && (
+        <PostList
+          childPosts={sanityPost.childPosts}
+          childPostTitle={sanityPost.childPostsTitle}
+        />
+      )}
     </Layout>
-  )
-}
+  );
+};
 
-export default PostLayout
+export default PostLayout;
 
 export const query = graphql`
   fragment SanityPostDetailsFull on SanityPost {
@@ -55,10 +59,7 @@ export const query = graphql`
       ...SanityPostDetailsFull
       childPosts {
         ...SanityPostDetailsListable
-        childPosts {
-          ...SanityPostDetailsListable
-        }
       }
     }
   }
-`
+`;
