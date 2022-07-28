@@ -1,37 +1,50 @@
-import * as React from "react";
-import { graphql, Link, PageProps } from "gatsby";
-import Layout from "../components/layouts/layout";
+import * as React from "react"
+import { graphql, Link, PageProps } from "gatsby"
+import Layout from "../components/layouts/layout"
+import PostList from "../components/post/PostList"
+import FeaturedPost from "../components/post/FeaturedPost"
 
 const IndexPage = ({ data }: PageProps<Queries.GetRootPostsQuery>) => {
-  const [firstPost, ...otherPosts] = data.allSanityPost.posts;
+  const [firstPost, ...otherPosts] = data.posts.nodes
+  const [firstSet, ...otherSets] = data.sets.nodes
   return (
     <Layout>
+      <div className='mt-4' />
+      {/* TODO: Featured set post */}
+      <FeaturedPost post={firstSet} />
       {/* TODO: Featured blog post */}
-      <div>
-        <Link to={firstPost.fullSlug}>
-          <h1 className="font-serif text-xl font-bold">{firstPost.title}</h1>
-        </Link>
-      </div>
+      <FeaturedPost post={firstPost} />
+      {/* TODO: Set posts */}
+      {!!otherSets.length && (
+        <PostList childPosts={otherSets} childPostTitle='Recent collections' />
+      )}
       {/* TODO: Blog posts */}
-      <div>
-        {otherPosts.map(({ title, id, fullSlug }) => (
-          <Link key={id} to={fullSlug}>
-            <h2 className="font-serif text-lg font-bold">{title}</h2>
-          </Link>
-        ))}
-      </div>
+      {!!otherPosts.length && (
+        <PostList childPosts={otherPosts} childPostTitle='Recent posts' />
+      )}
     </Layout>
-  );
-};
+  )
+}
 
-export default IndexPage;
+export default IndexPage
 
 export const query = graphql`
   query GetRootPosts {
-    allSanityPost {
-      posts: nodes {
+    posts: allSanityPost(
+      sort: { order: DESC, fields: _createdAt }
+      filter: { isSet: { eq: false } }
+    ) {
+      nodes {
+        ...SanityPostDetailsFull
+      }
+    }
+    sets: allSanityPost(
+      sort: { order: DESC, fields: _createdAt }
+      filter: { isSet: { eq: true } }
+    ) {
+      nodes {
         ...SanityPostDetailsFull
       }
     }
   }
-`;
+`

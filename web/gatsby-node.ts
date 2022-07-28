@@ -98,11 +98,6 @@ export const createPages: GatsbyNode["createPages"] = async ({
   reporter
 }) => {
   const template = path.resolve(`./src/components/layouts/PostLayout.tsx`)
-  // TODO:
-  // Query for allSanityPosts
-  // Iterate over all that do not have a parent as a "root" page,
-  // then iterate over remaining with their full paths (recursion?)
-  // how do I get the childPosts recursively?
   const rootPosts = await graphql<Queries.GetPostsForNodeQuery>(`
     query GetPostsForNode {
       allSanityPost {
