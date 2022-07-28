@@ -9,7 +9,7 @@ const IndexPage = ({ data }: PageProps<Queries.GetRootPostsQuery>) => {
   const [firstSet, ...otherSets] = data.sets.nodes
   return (
     <Layout>
-      <div className='mt-4' />
+      <div className='mt-16' />
       {/* TODO: Featured set post */}
       <FeaturedPost post={firstSet} />
       {/* TODO: Featured blog post */}
