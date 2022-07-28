@@ -1,5 +1,9 @@
 import type { GatsbyConfig } from "gatsby"
 
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `mattwelson.com`,
@@ -13,15 +17,15 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-source-sanity",
       options: {
-        projectId: "tqppuesf",
-        dataset: "production",
+        projectId: process.env.GATSBY_SANITY_ID,
+        dataset: process.env.GATSBY_SANITY_DATASET,
       },
     },
     {
       resolve: "gatsby-plugin-sanity-image",
       options: {
-        projectId: "tqppuesf",
-        dataset: "production",
+        projectId: process.env.GATSBY_SANITY_ID,
+        dataset: process.env.GATSBY_SANITY_DATASET,
         customImageTypes: ["SanityMetaimage"],
       },
     },

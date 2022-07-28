@@ -12,7 +12,9 @@ const PostLayout = ({
     <Layout>
       <div className='mt-16' />
       <HeroSection post={sanityPost} />
-      <PortableText value={sanityPost._rawContent} />
+      {sanityPost._rawContent && (
+        <PortableText value={sanityPost._rawContent} />
+      )}
       <h2 className='font-serif text-lg font-bold'>
         {sanityPost.childPostsTitle}
       </h2>
