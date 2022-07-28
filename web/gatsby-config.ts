@@ -17,6 +17,14 @@ const config: GatsbyConfig = {
         dataset: "production",
       },
     },
+    {
+      resolve: "gatsby-plugin-sanity-image",
+      options: {
+        projectId: "tqppuesf",
+        dataset: "production",
+        customImageTypes: ["SanityMetaimage"],
+      },
+    },
     "gatsby-plugin-postcss",
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,

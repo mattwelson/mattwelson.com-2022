@@ -1,6 +1,20 @@
 import type { GatsbyNode } from "gatsby";
 import path from "path";
 
+// Find the highest ancestor of a post
+async function getAncestorList(list: Array<any>, context: any): Promise<Array<SanityPost>> {
+  const parent = await context.nodeModel.findOne({
+    type: "SanityPost",
+    query: {
+      filter: {
+        childPosts: { elemMatch: { id: { eq: list[0].id } } },
+      },
+    },
+  })
+  if (!parent) return list
+  return getAncestorList([parent, ...list], context)
+}
+
 // Add a parentPost field and resolve it for SanityPosts
 // Note: @link didn't seem to work in this case
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
@@ -10,6 +24,10 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       `
       type SanityPost implements Node {
         parentPost: SanityPost
+        ancestorPost: SanityPost
+        fullSlug: String!
+        isRoot: Boolean!
+        isSet: Boolean!
       }
       `,
       schema.buildObjectType({
@@ -28,6 +46,45 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
               });
             },
           },
+          ancestorPost: {
+            type: "SanityPost",
+            resolve: async (source, _args, context) => {
+              return (await getAncestorList([source], context))[0]
+            }
+          },
+          fullSlug: {
+            type: "String!",
+            resolve: async (source, _args, context) => {
+              return (await getAncestorList([source], context))
+                .map(({ slug: { current } }) => current as string).reduce((acc, s) => `${acc}/${s}`, "")
+            }
+          },
+          isRoot: {
+            type: "Boolean!",
+            resolve: async (source, _args, context) => {
+              return !(await context.nodeModel.findOne({
+                type: "SanityPost",
+                query: {
+                  filter: {
+                    childPosts: { elemMatch: { id: { eq: source.id } } },
+                  },
+                },
+              }));
+            },
+          },
+          isSet: {
+            type: "Boolean!",
+            resolve: async (source, _args, context) => {
+              return !!source.childPosts && !(await context.nodeModel.findOne({
+                type: "SanityPost",
+                query: {
+                  filter: {
+                    childPosts: { elemMatch: { id: { eq: source.id } } },
+                  },
+                },
+              }));
+            },
+          }
         },
       }),
     ];
@@ -38,6 +95,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions: { createPage },
+  reporter
 }) => {
   const template = path.resolve(`./src/components/layouts/PostLayout.tsx`)
   // TODO:
@@ -45,14 +103,12 @@ export const createPages: GatsbyNode["createPages"] = async ({
   // Iterate over all that do not have a parent as a "root" page,
   // then iterate over remaining with their full paths (recursion?)
   // how do I get the childPosts recursively?
-  const rootPosts = await graphql<Queries.GetRootPostsQuery>(`
-    query GetRootPostsClone {
+  const rootPosts = await graphql<Queries.GetPostsForNodeQuery>(`
+    query GetPostsForNode {
       allSanityPost {
         posts: nodes {
           id
-          slug {
-            current
-          }
+          fullSlug
           parentPost {
             id
           }
@@ -63,10 +119,10 @@ export const createPages: GatsbyNode["createPages"] = async ({
       }
     }
   `);
-  rootPosts.data?.allSanityPost.posts.forEach(({ slug, id }) => {
-    if (!slug?.current) return
+  rootPosts.data?.allSanityPost.posts.forEach(({ fullSlug, id }) => {
+    if (!fullSlug) reporter.warn("No slug found for post")
     createPage({
-      path: `/${slug?.current}`,
+      path: fullSlug,
       component: template,
       context: {
         id,

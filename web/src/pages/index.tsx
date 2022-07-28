@@ -8,14 +8,14 @@ const IndexPage = ({ data }: PageProps<Queries.GetRootPostsQuery>) => {
     <Layout>
       {/* TODO: Featured blog post */}
       <div>
-        <Link to={`${firstPost.slug?.current}`}>
+        <Link to={firstPost.fullSlug}>
           <h1 className="font-serif text-xl font-bold">{firstPost.title}</h1>
         </Link>
       </div>
       {/* TODO: Blog posts */}
       <div>
-        {otherPosts.map(({ title, id, slug }) => (
-          <Link key={id} to={`${slug?.current}`}>
+        {otherPosts.map(({ title, id, fullSlug }) => (
+          <Link key={id} to={fullSlug}>
             <h2 className="font-serif text-lg font-bold">{title}</h2>
           </Link>
         ))}
