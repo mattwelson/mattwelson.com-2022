@@ -1,7 +1,10 @@
+import { FaRegImages as icon } from 'react-icons/fa'
+
 export default {
   name: "imagecollection",
   title: "Image Collection",
   type: "object",
+  icon,
   fields: [
     {
       name: "images",

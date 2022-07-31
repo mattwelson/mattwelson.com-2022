@@ -1,8 +1,11 @@
+import { FaFolderOpen as icon } from 'react-icons/fa'
+
 export default {
     name: 'category',
     title: 'Category',
     type: 'document',
     hidden: true,
+    icon,
     fields: [
         {
             name: 'title',
@@ -19,5 +22,11 @@ export default {
             },
             initialValue: 'slate'
         }
-    ]
+    ],
+    preview: {
+        select: {
+            title: 'title',
+            subtitle: 'colour'
+        }
+    }
 }

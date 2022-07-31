@@ -1,7 +1,10 @@
+import { FaPenFancy as icon } from 'react-icons/fa'
+
 export default {
   name: "post",
   type: "document",
   title: "Post",
+  icon,
   fieldsets: [
     {
       name: 'childPostGroup', title: 'Child Posts', options: {
@@ -92,4 +95,11 @@ export default {
       ],
     },
   ],
+  preview: {
+    select: {
+      title: 'title',
+      media: 'image',
+      subtitle: 'category.title'
+    }
+  }
 }

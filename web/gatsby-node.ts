@@ -2,7 +2,7 @@ import type { GatsbyNode } from "gatsby";
 import path from "path";
 
 // Find the highest ancestor of a post
-async function getAncestorList(list: Array<any>, context: any): Promise<Array<SanityPost>> {
+async function getAncestorList(list: Array<any>, context: any): Promise<Array<Queries.SanityPost>> {
   const parent = await context.nodeModel.findOne({
     type: "SanityPost",
     query: {

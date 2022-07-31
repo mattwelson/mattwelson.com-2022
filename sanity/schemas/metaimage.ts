@@ -1,7 +1,10 @@
+import { FaRegImage as icon } from 'react-icons/fa'
+
 export default {
   name: "metaimage",
   title: "Image",
   type: "image",
+  icon,
   options: {
     hotspot: true,
   },
