@@ -1,22 +1,25 @@
-import * as React from "react"
-import SanityImage from "gatsby-plugin-sanity-image"
+import * as React from "react";
+import SanityImage from "gatsby-plugin-sanity-image";
 
 const BigImage = ({
   image,
   showCaption = true,
 }: {
-  image: Queries.ImageWithPreviewFragment & { caption: string }
+  image: Queries.ImageWithPreviewFragment & { caption: string };
+  showCaption?: Boolean;
 }) => (
-  <>
+  <figure className="-mx-8 my-4 w-[calc(100%+4rem)]">
     <SanityImage
       {...image}
       // tell Sanity how large to make the image (does not set any CSS)
-      className='-mx-8 my-4 w-[calc(100%+4rem)] max-w-none object-cover'
+      className="object-cover"
     />
     {image.caption && showCaption && (
-      <caption className='mb-4 text-slate-600'>{image.caption}</caption>
+      <figcaption className="mt-2 mb-4 text-center text-slate-600">
+        {image.caption}
+      </figcaption>
     )}
-  </>
-)
+  </figure>
+);
 
-export default BigImage
+export default BigImage;

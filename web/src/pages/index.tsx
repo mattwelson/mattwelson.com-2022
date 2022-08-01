@@ -1,32 +1,32 @@
-import * as React from "react"
-import { graphql, Link, PageProps } from "gatsby"
-import Layout from "../components/layouts/layout"
-import PostList from "../components/post/PostList"
-import FeaturedPost from "../components/post/FeaturedPost"
+import * as React from "react";
+import { graphql, PageProps } from "gatsby";
+import Layout from "../components/layouts/layout";
+import PostList from "../components/post/PostList";
+import FeaturedPost from "../components/post/FeaturedPost";
 
 const IndexPage = ({ data }: PageProps<Queries.GetRootPostsQuery>) => {
-  const [firstPost, ...otherPosts] = data.posts.nodes
-  const [firstSet, ...otherSets] = data.sets.nodes
+  const [firstPost, ...otherPosts] = data.posts.nodes;
+  const [firstSet, ...otherSets] = data.sets.nodes;
   return (
     <Layout>
-      <div className='mt-16' />
+      <div className="mt-16" />
       {/* TODO: Featured set post */}
       <FeaturedPost post={firstSet} />
       {/* TODO: Featured blog post */}
       <FeaturedPost post={firstPost} />
       {/* TODO: Set posts */}
       {!!otherSets.length && (
-        <PostList childPosts={otherSets} childPostTitle='Recent collections' />
+        <PostList childPosts={otherSets} childPostTitle="Recent collections" />
       )}
       {/* TODO: Blog posts */}
       {!!otherPosts.length && (
-        <PostList childPosts={otherPosts} childPostTitle='Recent posts' />
+        <PostList childPosts={otherPosts} childPostTitle="Recent posts" />
       )}
     </Layout>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;
 
 export const query = graphql`
   query GetRootPosts {
@@ -47,4 +47,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

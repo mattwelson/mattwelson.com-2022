@@ -13,11 +13,15 @@ const PostList = ({
 }) => {
   return (
     <div className={`${className} `}>
-      <h3 className="my-4 font-sans text-lg">{childPostTitle ?? "Related"}</h3>
+      <h3 className="mt-4 font-semibold uppercase text-slate-400">
+        {childPostTitle ?? "Related"}
+      </h3>
+      {!!childPostTitle && <div className="mb-4 h-0.5 w-8 bg-slate-400"></div>}
       {childPosts.map((post) => (
         <Link
           to={post.fullSlug}
           className="mb-16 grid items-center gap-4 text-2xl font-bold md:grid-cols-[2fr_1fr] md:gap-8"
+          key={post.fullSlug}
         >
           <Link to={post.fullSlug} className="md:order-1">
             {post.title}

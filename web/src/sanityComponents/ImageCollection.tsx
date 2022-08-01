@@ -4,7 +4,10 @@ import { getImageDimensions } from "@sanity/asset-utils";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import client from "./sanityClient";
 
-type CaptionSanityImageSource = SanityImageSource & { caption?: string };
+type CaptionSanityImageSource = SanityImageSource & {
+  caption?: string;
+  _key: String;
+};
 
 // TODO: show caption on hover or something?
 const ImageCollectionImage = ({
@@ -14,10 +17,9 @@ const ImageCollectionImage = ({
 }) => {
   const { aspectRatio } = getImageDimensions(image);
   return (
-    <div
+    <figure
       className="group grid grid-rows-[1fr_auto]"
       style={{ flex: aspectRatio }}
-      key={image.id}
     >
       <img
         src={urlBuilder(client)
@@ -31,11 +33,11 @@ const ImageCollectionImage = ({
         className={`object-cover md:min-h-full`}
       />
       {image.caption && (
-        <caption className="my-4 w-full text-center text-slate-600 opacity-0 duration-200 ease-in-out group-hover:opacity-100  ">
+        <figcaption className="mt-2 mb-4 w-full text-center text-slate-600 duration-200 ease-in-out group-hover:opacity-100 md:opacity-0  ">
           {image.caption}
-        </caption>
+        </figcaption>
       )}
-    </div>
+    </figure>
   );
 };
 
@@ -43,20 +45,20 @@ const ImageCollection = ({
   value: { images, config },
 }: {
   value: {
-    images: Array<CaptionSanityImageSource>;
+    images: Array<CaptionSanityImageSource & { _key: String }>;
     config: Array<string>;
   };
 }) => {
   const isFullWidth = config.includes("full-width");
   const fullBleedClasses =
-    "full-bleed max-w-[2000px] mx-auto md:px-2 md:flex-row flex-col";
+    "full-bleed max-w-[2000px] mx-auto md:px-2 md:flex-row flex-col my-4";
   const bigClasses = "-mx-8 my-4 w-[calc(100%+4rem)] max-w-none";
   return (
     <div
       className={`${isFullWidth ? fullBleedClasses : bigClasses} flex gap-1`}
     >
       {images.map((image) => (
-        <ImageCollectionImage image={image} />
+        <ImageCollectionImage image={image} key={image._key} />
       ))}
     </div>
   );
