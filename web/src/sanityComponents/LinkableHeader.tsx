@@ -14,7 +14,7 @@ const LinkableHeader =
     children: React.ReactNode;
     value: PortableTextBlock;
   }) => {
-    const headerId = slugify(toPlainText(value));
+    const headerId = slugify(toPlainText(value), { lower: true });
     return (
       <Link to={`#${headerId}`} className="group flex items-center gap-2">
         <Header id={headerId} className={className}>

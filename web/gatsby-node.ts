@@ -1,3 +1,4 @@
+import slugify from 'slugify';
 import type { GatsbyNode } from "gatsby";
 import path from "path";
 
@@ -15,8 +16,6 @@ async function getAncestorList(list: Array<any>, context: any): Promise<Array<Qu
   return getAncestorList([parent, ...list], context)
 }
 
-// Add a parentPost field and resolve it for SanityPosts
-// Note: @link didn't seem to work in this case
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
   ({ actions, schema }) => {
     const { createTypes } = actions;
@@ -28,6 +27,11 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
         fullSlug: String!
         isRoot: Boolean!
         isSet: Boolean!
+      }
+
+      type SanityCategory implements Node {
+        posts: [SanityPost!]
+        fullSlug: String!
       }
       `,
       schema.buildObjectType({
@@ -87,6 +91,34 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           }
         },
       }),
+      schema.buildObjectType({
+        name: "SanityCategory",
+        fields: {
+          fullSlug: {
+            type: "String!",
+            resolve: ({ title }) => `/category/${slugify(title, { lower: true })}`
+          },
+          posts: {
+            type: ["SanityPost!"],
+            resolve: async ({ title }: Queries.SanityCategory, args, context) => {
+              const { entries } = (await context.nodeModel.findAll({
+                type: "SanityPost",
+                query: {
+                  ...args,
+                  filter: {
+                    category: {
+                      title: {
+                        eq: title
+                      }
+                    }
+                  },
+                }
+              }))
+              return entries
+            }
+          }
+        }
+      })
     ];
 
     createTypes(typeDefs);
@@ -97,7 +129,8 @@ export const createPages: GatsbyNode["createPages"] = async ({
   actions: { createPage },
   reporter
 }) => {
-  const template = path.resolve(`./src/components/layouts/PostLayout.tsx`)
+  const postTemplate = path.resolve(`./src/components/layouts/PostLayout.tsx`)
+  const categoryTemplate = path.resolve(`./src/components/layouts/CategoryLayout.tsx`)
   const rootPosts = await graphql<Queries.GetPostsForNodeQuery>(`
     query GetPostsForNode {
       allSanityPost {
@@ -112,15 +145,31 @@ export const createPages: GatsbyNode["createPages"] = async ({
           }
         }
       }
+      allSanityCategory {
+        categories: nodes {
+          fullSlug
+          title
+        }
+      }
     }
   `);
   rootPosts.data?.allSanityPost.posts.forEach(({ fullSlug, id }) => {
     if (!fullSlug) reporter.warn("No slug found for post")
     createPage({
       path: fullSlug,
-      component: template,
+      component: postTemplate,
       context: {
         id,
+      },
+    })
+  });
+  rootPosts.data?.allSanityCategory.categories.forEach(({ fullSlug, title }) => {
+    if (!fullSlug) reporter.warn("No slug found for category")
+    createPage({
+      path: fullSlug,
+      component: categoryTemplate,
+      context: {
+        title,
       },
     })
   });

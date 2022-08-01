@@ -1,9 +1,11 @@
-import * as React from "react"
+import { Link } from "gatsby";
+import * as React from "react";
 
 // text-emerald-500
+// text-purple-500
 // TODO: Workout how to make this a switch that contains the full text
-function getColour(colour: string, prefix = "text-") {
-  return `${prefix}${colour}-500`
+export function getColour(colour: string, prefix = "text-") {
+  return `${prefix}${colour}-500`;
 }
 
 // TODO: Move to own file
@@ -11,17 +13,21 @@ function getColour(colour: string, prefix = "text-") {
 const CategorySubtitle = ({
   post,
 }: {
-  post: Queries.SanityPostDetailsFeaturableFragment
+  post: Queries.SanityPostDetailsFeaturableFragment;
 }) => {
+  const { title, fullSlug }: { title: string; fullSlug: string } =
+    post?.category ?? post?.ancestorPost;
   return (
-    <h3
-      className={`text-lg font-bold ${getColour(
-        post?.ancestorPost.category.colour
-      )}`}
-    >
-      {post?.category?.title ?? post.ancestorPost.title}
-    </h3>
-  )
-}
+    <Link to={fullSlug}>
+      <h3
+        className={`text-lg font-bold ${getColour(
+          post?.ancestorPost.category.colour
+        )}`}
+      >
+        {title}
+      </h3>
+    </Link>
+  );
+};
 
-export default CategorySubtitle
+export default CategorySubtitle;

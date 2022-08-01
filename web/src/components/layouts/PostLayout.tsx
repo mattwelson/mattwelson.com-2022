@@ -38,9 +38,11 @@ export const query = graphql`
     }
     ancestorPost {
       title
+      fullSlug
       category {
         title
         colour
+        fullSlug
       }
     }
     parentPost {
@@ -50,6 +52,7 @@ export const query = graphql`
     fullSlug
     category {
       title
+      fullSlug
     }
     _rawContent
   }
