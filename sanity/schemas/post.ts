@@ -92,6 +92,13 @@ export default {
         {
           type: "imagecollection",
         },
+        {
+          type: 'reference',
+          title: 'Instagram Post',
+          to: [{
+            type: 'instagrampost'
+          }]
+        }
       ],
     },
   ],

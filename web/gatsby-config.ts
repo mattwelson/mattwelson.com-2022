@@ -27,6 +27,9 @@ const config: GatsbyConfig = {
         projectId: process.env.GATSBY_SANITY_ID,
         dataset: process.env.GATSBY_SANITY_DATASET,
         customImageTypes: ["SanityMetaimage"],
+        defaultImageConfig: {
+          quality: 90,
+        }
       },
     },
     "gatsby-plugin-postcss",

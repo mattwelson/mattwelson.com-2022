@@ -10,9 +10,10 @@ const BigImage = ({
 }) => (
   <figure className="-mx-8 my-4 w-[calc(100%+4rem)]">
     <SanityImage
+      alt={image.caption}
       {...image}
       // tell Sanity how large to make the image (does not set any CSS)
-      className="object-cover"
+      className="w-full object-cover"
     />
     {image.caption && showCaption && (
       <figcaption className="mt-2 mb-4 text-center text-slate-600">

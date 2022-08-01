@@ -8,25 +8,30 @@ export function getColour(colour: string, prefix = "text-") {
   return `${prefix}${colour}-500`;
 }
 
-// TODO: Move to own file
-// TODO: Link to category OR link to ancestor, depending on what is rendered - more logic!
 const CategorySubtitle = ({
   post,
+  categoryLink = true,
 }: {
   post: Queries.SanityPostDetailsFeaturableFragment;
+  categoryLink?: Boolean;
 }) => {
   const { title, fullSlug }: { title: string; fullSlug: string } =
     post?.category ?? post?.ancestorPost;
-  return (
+  const Header = () => (
+    <h3
+      className={`text-lg font-bold ${getColour(
+        post?.ancestorPost?.category?.colour ?? ""
+      )}`}
+    >
+      {title}
+    </h3>
+  );
+  return categoryLink ? (
     <Link to={fullSlug}>
-      <h3
-        className={`text-lg font-bold ${getColour(
-          post?.ancestorPost.category.colour
-        )}`}
-      >
-        {title}
-      </h3>
+      <Header />
     </Link>
+  ) : (
+    <Header />
   );
 };
 

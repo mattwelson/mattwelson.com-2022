@@ -9,7 +9,7 @@ const MetaImage = ({
 }: {
   value: SanityImageSource & { caption?: string };
 }) => {
-  const { width, height } = getImageDimensions(value);
+  const { width, height } = getImageDimensions(value as SanityImageSource);
   return (
     <figure className="-mx-8 my-4 w-[calc(100%+4rem)] ">
       <img

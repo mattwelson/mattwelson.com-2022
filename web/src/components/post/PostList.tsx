@@ -23,10 +23,9 @@ const PostList = ({
           className="mb-16 grid items-center gap-4 text-2xl font-bold md:grid-cols-[2fr_1fr] md:gap-8"
           key={post.fullSlug}
         >
-          <Link to={post.fullSlug} className="md:order-1">
-            {post.title}
-          </Link>
+          <h3 className="md:order-1">{post.title}</h3>
           <SanityImage
+            alt={post.image?.caption}
             {...post.image}
             className="md:-ml-8 md:w-[calc(100%+2rem)] md:max-w-none"
           />

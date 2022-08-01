@@ -5,12 +5,14 @@ import CategorySubtitle from "./CategorySubtitle";
 const HeroSection = ({
   post,
   showCaption = true,
+  categoryLink = true,
 }: {
   post: Queries.SanityPostDetailsFeaturableFragment;
   showCaption?: Boolean;
+  categoryLink?: Boolean;
 }) => (
   <>
-    <CategorySubtitle post={post} />
+    <CategorySubtitle post={post} categoryLink={categoryLink} />
     <h1 className="mb-4 font-serif text-3xl font-bold sm:text-4xl md:text-6xl">
       {post.title}
     </h1>
