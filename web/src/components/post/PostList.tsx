@@ -27,7 +27,7 @@ const PostList = ({
           <SanityImage
             alt={post.image?.caption}
             {...post.image}
-            className="md:-ml-8 md:w-[calc(100%+2rem)] md:max-w-none"
+            className="w-full md:-ml-8 md:w-[calc(100%+2rem)] md:max-w-none"
           />
         </Link>
       ))}

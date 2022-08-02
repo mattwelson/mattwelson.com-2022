@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import { PortableTextComponentsProvider } from "@portabletext/react";
 import { FaStrava, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
 import components from "../../sanityComponents/components";
+import InstagramFeed from "../instagram/InstagramFeed";
 
 const Layout: React.FunctionComponent<{ children: React.ReactNode }> = ({
   children,
@@ -16,6 +17,7 @@ const Layout: React.FunctionComponent<{ children: React.ReactNode }> = ({
           </div>
         </header>
         <main className="grid-content">{children}</main>
+        <InstagramFeed />
         <footer className="grid-content mt-16 pt-8 pb-16 ">
           <div className="mb-6 flex items-center justify-center gap-6 text-4xl text-slate-400">
             <a

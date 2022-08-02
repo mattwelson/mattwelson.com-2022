@@ -3,13 +3,15 @@ import urlBuilder from "@sanity/image-url/";
 import { getImageDimensions } from "@sanity/asset-utils";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { FaInstagram } from "react-icons/fa";
-
-import client from "./sanityClient";
+import client from "../../sanityComponents/sanityClient";
+import getColourValue from "./utils";
 
 const InstagramPostInline = ({
-  node: { image, url },
+  post: { image, url },
+  isFirst = false,
 }: {
-  node: Queries.SanityInstagrampost;
+  post: Queries.InstagramListableFragment;
+  isFirst?: Boolean;
 }) => {
   if (!url || !image) {
     console.error(`No URL defined for instagrampost`);
@@ -21,10 +23,12 @@ const InstagramPostInline = ({
       href={url}
       target="_blank"
       rel="noopener nofollow noindex"
-      className="font-semibold text-blue-700 underline"
+      className={`origin-bottom-right overflow-hidden font-semibold text-blue-700  underline sm:rounded-md ${
+        isFirst ? `md:scale-125 md:shadow-md` : `md:shadow-sm`
+      }`}
     >
-      <figure className="relative -mx-8 my-4 w-[calc(100%+4rem)] bg-white p-6 duration-200 ease-in-out sm:rounded-lg sm:drop-shadow-none hover:sm:-translate-y-1 hover:sm:bg-slate-100 hover:sm:drop-shadow-lg">
-        <FaInstagram className="absolute right-8 top-8 text-xl text-white" />
+      <figure className="relative">
+        <FaInstagram className="absolute right-4 top-4 text-xl text-white" />
         <img
           src={urlBuilder(client)
             .image(image)
@@ -35,13 +39,8 @@ const InstagramPostInline = ({
           alt={image?.caption || ""}
           loading="lazy"
           // tell Sanity how large to make the image (does not set any CSS)
-          className={` aspect-square rounded-md object-cover`}
+          className={`aspect-square object-cover`}
         />
-        {image?.caption && (
-          <figcaption className="mt-2 mb-4 text-center text-slate-600">
-            {image.caption}
-          </figcaption>
-        )}
       </figure>
     </a>
   );

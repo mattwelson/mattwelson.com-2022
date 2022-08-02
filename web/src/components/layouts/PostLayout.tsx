@@ -9,7 +9,7 @@ const PostLayout = ({
   data: { sanityPost },
 }: PageProps<Queries.GetPostQuery>) => {
   if (!sanityPost) return "Ooops no post!";
-  console.log({ content: sanityPost._rawContent });
+
   return (
     <Layout>
       <div className="mt-16" />
