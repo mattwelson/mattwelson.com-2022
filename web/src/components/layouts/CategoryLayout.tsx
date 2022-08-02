@@ -20,14 +20,29 @@ const PostLayout = ({
       >
         {sanityCategory.title}
       </h1>
+      {!sanityCategory.posts?.length && (
+        <h2 className="my-16 text-center font-semibold text-slate-400">
+          Opps, I haven't started this yet.
+        </h2>
+      )}
       <PostList childPosts={sanityCategory.posts} childPostTitle="" />
-      {!!otherCategories.nodes?.length && <h2>Other categories</h2>}
-      {!!otherCategories.nodes?.length &&
-        otherCategories.nodes.map(({ fullSlug, title, colour }) => (
-          <Link to={fullSlug} className={`mb-4 ${getColour(colour)}`}>
-            {title}
-          </Link>
-        ))}
+      {!!otherCategories.nodes?.length && (
+        <>
+          <h2 className={`font-semibold uppercase text-slate-400`}>
+            Other Categories
+          </h2>
+          <div className="mb-4 h-0.5 w-8 bg-slate-400"></div>
+        </>
+      )}
+      {!!otherCategories.nodes?.length && (
+        <div className="mb-8 flex gap-4">
+          {otherCategories.nodes.map(({ fullSlug, title, colour }) => (
+            <Link to={fullSlug} className={`font-bold ${getColour(colour)}`}>
+              {title}
+            </Link>
+          ))}
+        </div>
+      )}
     </Layout>
   );
 };

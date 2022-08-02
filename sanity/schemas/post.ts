@@ -93,6 +93,9 @@ export default {
           type: "imagecollection",
         },
         {
+          type: "spotify",
+        },
+        {
           type: 'reference',
           title: 'Instagram Post',
           to: [{

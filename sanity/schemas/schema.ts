@@ -9,6 +9,7 @@ import imagecollection from "./imagecollection"
 import instagramPost from "./instagrampost"
 import metaimage from "./metaimage"
 import post from "./post"
+import spotify from "./embeds/spotify"
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -16,5 +17,5 @@ export default createSchema({
   name: "default",
   // Then proceed to concatenate our document type
   // to the ones provided by any plugins that are installed
-  types: schemaTypes.concat([category, imagecollection, instagramPost, metaimage, post]),
+  types: schemaTypes.concat([category, imagecollection, instagramPost, metaimage, post, spotify]),
 })

@@ -8,19 +8,13 @@ import LinkableHeader from "./LinkableHeader";
 import LinkInline from "./LinkInline";
 import MetaImage from "./MetaImage";
 import InstagramPostInline from "./InstagramPostInline";
+import SpotifyEmbed from "./SpotifyEmbed";
 
 const components: Partial<PortableTextReactComponents> = {
   types: {
     metaimage: MetaImage,
     imagecollection: ImageCollection,
-    instagrampost: (params: any) => {
-      console.log({ params });
-      return <div>instagrampost </div>;
-    },
-    reference: (params: any) => {
-      console.log({ params });
-      return <div>reference </div>;
-    },
+    spotify: SpotifyEmbed,
   },
   block: {
     h1: LinkableHeader("h1", "mb-2 font-serif text-4xl"),
