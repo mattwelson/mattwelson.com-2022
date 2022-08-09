@@ -10,6 +10,7 @@ const CategoryPage = ({
   // TODO: sort posts by created date desc
   return (
     <Layout>
+      <title>Categories || Matt Welson</title>
       <div className="mt-16" />
 
       <h1 className={`font-semibold uppercase text-slate-400`}>Categories</h1>

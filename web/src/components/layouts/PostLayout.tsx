@@ -12,6 +12,7 @@ const PostLayout = ({
 
   return (
     <Layout>
+      <title>{sanityPost.title} || Matt Welson</title>
       <div className="mt-16" />
       <HeroSection post={sanityPost} />
       {sanityPost._rawContent && (

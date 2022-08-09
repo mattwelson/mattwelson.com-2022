@@ -23,11 +23,13 @@ const InstagramPostInline = ({
       href={url}
       target="_blank"
       rel="noopener nofollow noindex"
-      className={`origin-bottom-right overflow-hidden font-semibold text-blue-700  underline sm:rounded-md ${
-        isFirst ? `md:scale-125 md:shadow-md` : `md:shadow-sm`
+      className={`origin-bottom-right overflow-hidden font-semibold text-blue-700 underline opacity-95 duration-200 ease-in-out  hover:opacity-100 sm:rounded-md ${
+        isFirst
+          ? `md:scale-125 md:shadow-md hover:md:shadow-lg`
+          : `md:shadow-sm hover:md:shadow-md`
       }`}
     >
-      <figure className="relative">
+      <figure className="relative ">
         <FaInstagram className="absolute right-4 top-4 text-xl text-white" />
         <img
           src={urlBuilder(client)

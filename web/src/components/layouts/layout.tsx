@@ -53,7 +53,7 @@ const Layout: React.FunctionComponent<{ children: React.ReactNode }> = ({
           </div>
           <div className="my-6 flex items-center justify-center gap-6 text-6xl text-slate-400">
             <a
-              href="https://github.com/mattwelson"
+              href="https://github.com/mattwelson/mattwelson.com-2022"
               target="_blank"
               rel="noopener nofollow noindex"
               className="duration-200 ease-in-out hover:text-slate-800"

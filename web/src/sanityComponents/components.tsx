@@ -17,10 +17,10 @@ const components: Partial<PortableTextReactComponents> = {
     spotify: SpotifyEmbed,
   },
   block: {
-    h1: LinkableHeader("h1", "mb-2 font-serif text-4xl"),
-    h2: LinkableHeader("h2", "mb-2 font-serif text-3xl"),
-    h3: LinkableHeader("h3", "mb-2 font-serif text-2xl"),
-    h4: LinkableHeader("h4", "mb-2 font-serif text-xl"),
+    h1: LinkableHeader("h1", "mb-2 font-serif text-4xl font-bold"),
+    h2: LinkableHeader("h2", "mb-2 font-serif text-3xl font-bold"),
+    h3: LinkableHeader("h3", "mb-2 font-serif text-2xl font-bold"),
+    h4: LinkableHeader("h4", "mb-2 font-serif text-xl font-bold"),
     normal: (params) => {
       const {
         value: { _type: type },

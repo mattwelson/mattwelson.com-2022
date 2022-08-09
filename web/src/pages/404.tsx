@@ -1,16 +1,16 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import Layout from "../components/layouts/layout"
+import * as React from "react";
+import { Link } from "gatsby";
+import Layout from "../components/layouts/layout";
 
 // markup
 const NotFoundPage = () => {
   return (
     <Layout>
-      <title>Not found</title>
+      <title>Not found || Matt Welson</title>
       <h1>Page not found</h1>
       <p>
         Sorry{" "}
-        <span role='img' aria-label='Pensive emoji'>
+        <span role="img" aria-label="Pensive emoji">
           😔
         </span>{" "}
         we couldn’t find what you were looking for.
@@ -23,10 +23,10 @@ const NotFoundPage = () => {
           </>
         ) : null}
         <br />
-        <Link to='/'>Go home</Link>.
+        <Link to="/">Go home</Link>.
       </p>
     </Layout>
-  )
-}
+  );
+};
 
-export default NotFoundPage
+export default NotFoundPage;

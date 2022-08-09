@@ -17,6 +17,7 @@ export default {
       name: "title",
       type: "string",
       title: "Post Title",
+      validation: Rule => Rule.required()
     },
     {
       name: "slug",
@@ -27,6 +28,7 @@ export default {
       options: {
         source: "title",
       },
+      validation: Rule => Rule.required()
     },
     {
       name: 'category',

@@ -11,6 +11,7 @@ const PostLayout = ({
   // TODO: sort posts by created date desc
   return (
     <Layout>
+      <title>{sanityCategory.title} || Matt Welson</title>
       <div className="mt-16" />
 
       <h1
