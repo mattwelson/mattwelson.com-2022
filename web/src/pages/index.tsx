@@ -12,9 +12,9 @@ const IndexPage = ({ data }: PageProps<Queries.GetRootPostsQuery>) => {
       <title>Matt Welson</title>
       <div className="mt-16" />
       {/* TODO: Featured set post */}
-      <FeaturedPost post={firstSet} />
+      {firstSet && <FeaturedPost post={firstSet} />}
       {/* TODO: Featured blog post */}
-      <FeaturedPost post={firstPost} />
+      {firstPost && <FeaturedPost post={firstPost} />}
       {/* TODO: Set posts */}
       {!!otherSets.length && (
         <PostList childPosts={otherSets} childPostTitle="Recent collections" />
