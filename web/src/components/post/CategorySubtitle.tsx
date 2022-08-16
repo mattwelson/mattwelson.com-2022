@@ -34,8 +34,9 @@ const CategorySubtitle = ({
   post: Queries.SanityPostDetailsFeaturableFragment;
   categoryLink?: Boolean;
 }) => {
-  const { title, fullSlug }: { title: string; fullSlug: string } =
-    post?.category ?? post?.ancestorPost;
+  const { title, fullSlug }: { title: string; fullSlug: string } = post?.isRoot
+    ? post?.category
+    : post?.ancestorPost ?? post?.category;
   const Header = () => (
     <h3
       className={`text-lg font-bold ${getColour(

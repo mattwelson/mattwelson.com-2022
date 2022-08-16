@@ -3,6 +3,8 @@ import {
   PortableTextReactComponents,
   SerializedBlock,
 } from "@portabletext/react";
+import getYouTubeId from "get-youtube-id";
+import YouTube from "react-youtube";
 import ImageCollection from "./ImageCollection";
 import LinkableHeader from "./LinkableHeader";
 import LinkInline from "./LinkInline";
@@ -15,6 +17,10 @@ const components: Partial<PortableTextReactComponents> = {
     metaimage: MetaImage,
     imagecollection: ImageCollection,
     spotify: SpotifyEmbed,
+    youtube: ({ value: { url } }: { value: Queries.SanityYoutube }) => {
+      const id = getYouTubeId(url);
+      return <YouTube videoId={id} className="mb-4" />;
+    },
   },
   block: {
     h1: LinkableHeader("h1", "mb-2 font-serif text-4xl font-bold"),

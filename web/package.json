@@ -37,10 +37,12 @@
     "gatsby-plugin-postcss": "^5.19.0",
     "gatsby-plugin-sanity-image": "^0.11.0",
     "gatsby-plugin-sharp": "^4.19.0",
+    "get-youtube-id": "^1.0.1",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "react-icons": "^4.4.0",
+    "react-youtube": "^9.0.3",
     "slugify": "^1.6.5",
     "tailwindcss": "^3.1.6",
     "typescript": "^4.7.4"

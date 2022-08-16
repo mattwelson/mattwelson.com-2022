@@ -98,6 +98,9 @@ export default {
           type: "spotify",
         },
         {
+          type: "youtube",
+        },
+        {
           type: 'reference',
           title: 'Instagram Post',
           to: [{

@@ -24,6 +24,8 @@ export default FeaturedPost;
 
 export const sanityPostDetailsListable = graphql`
   fragment SanityPostDetailsFeaturable on SanityPost {
+    date: _createdAt(formatString: "D MMMM yyyy")
+    isRoot
     id
     title
     fullSlug

@@ -16,7 +16,7 @@ const Layout: React.FunctionComponent<{ children: React.ReactNode }> = ({
             <Link to="/">Matt Welson</Link>
           </div>
         </header>
-        <main className="grid-content">{children}</main>
+        <main className="grid-content mb-16">{children}</main>
         <InstagramFeed />
         <footer className="grid-content mt-16 pt-8 pb-16 ">
           <div className="mb-6 flex items-center justify-center gap-6 text-4xl text-slate-400">

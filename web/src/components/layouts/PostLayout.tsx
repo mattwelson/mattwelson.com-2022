@@ -32,6 +32,8 @@ export default PostLayout;
 
 export const query = graphql`
   fragment SanityPostDetailsFull on SanityPost {
+    date: _createdAt(formatString: "D MMMM yyyy")
+    isRoot
     id
     title
     image {
