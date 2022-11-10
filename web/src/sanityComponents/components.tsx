@@ -19,7 +19,10 @@ const components: Partial<PortableTextReactComponents> = {
     spotify: SpotifyEmbed,
     youtube: ({ value: { url } }: { value: Queries.SanityYoutube }) => {
       const id = getYouTubeId(url);
-      return <YouTube videoId={id} className="mb-4" />;
+      return <YouTube videoId={id}
+        className="relative mb-4 h-0 w-full overflow-hidden pb-[56.25%]"
+        iframeClassName="absolute w-full h-full top-0 left-0"
+      />;
     },
   },
   block: {
