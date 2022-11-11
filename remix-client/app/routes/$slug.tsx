@@ -1,17 +1,29 @@
 import { json, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getClient } from "~/lib/sanity/getClient";
+import invariant from "tiny-invariant";
+import { PortableText } from "~/lib/sanity";
+import { getPost } from "~/model/post.server";
+
+interface LoaderData {
+  initialData: Awaited<ReturnType<typeof getPost>>;
+}
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const initialData = await getClient().fetch(
-    `*[_type=="post" && slug.current == $slug]`,
-    { slug: params.slug }
-  );
+  const { slug } = params;
+  invariant(slug);
+  const initialData = await getPost({ slug });
   return json({ initialData });
 };
 
 export default function Post() {
-  const { initialData } = useLoaderData();
+  const { initialData } = useLoaderData() as LoaderData;
   const [first] = initialData;
-  return <div>{first.title}</div>;
+  return (
+    <article>
+      <h1>{first.title}</h1>
+      <div className="prose">
+        <PortableText value={first.content}></PortableText>
+      </div>
+    </article>
+  );
 }
