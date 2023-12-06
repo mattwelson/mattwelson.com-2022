@@ -14,7 +14,6 @@ export default {
       type: "string",
       title: "Caption",
       options: {
-        isHighlighted: true,
         metadata: ["palette"],
       },
     },
