@@ -1,4 +1,4 @@
-import { FaPenFancy as icon } from 'react-icons/fa'
+import { FaPenFancy as icon } from "react-icons/fa";
 
 export default {
   name: "post",
@@ -7,17 +7,20 @@ export default {
   icon,
   fieldsets: [
     {
-      name: 'childPostGroup', title: 'Child Posts', options: {
+      name: "childPostGroup",
+      title: "Child Posts",
+      options: {
         collapsible: true,
-        collapsed: false
-      }
-    }],
+        collapsed: false,
+      },
+    },
+  ],
   fields: [
     {
       name: "title",
       type: "string",
       title: "Post Title",
-      validation: Rule => Rule.required()
+      validation: (Rule) => Rule.required(),
     },
     {
       name: "slug",
@@ -28,26 +31,24 @@ export default {
       options: {
         source: "title",
       },
-      validation: Rule => Rule.required()
+      validation: (Rule) => Rule.required(),
     },
     {
-      name: 'category',
-      title: 'Category',
-      type: 'reference',
-      to: [
-        { type: 'category' }
-      ]
+      name: "category",
+      title: "Category",
+      type: "reference",
+      to: [{ type: "category" }],
       // TODO: validation
       // TODO: Automatically initialise with category of parent
       // TODO: default to uncategorized?
     },
     {
-      name: 'childPostsTitle',
-      type: 'string',
-      title: 'Title',
-      description: 'The title to be shown next to groups of child posts',
-      initialValue: 'Related',
-      fieldset: 'childPostGroup'
+      name: "childPostsTitle",
+      type: "string",
+      title: "Title",
+      description: "The title to be shown next to groups of child posts",
+      initialValue: "Related",
+      fieldset: "childPostGroup",
     },
     {
       name: "childPosts",
@@ -70,10 +71,10 @@ export default {
                 }
               }[count(parents) == 0]
             */
-          }
+          },
         },
       ],
-      fieldset: 'childPostGroup'
+      fieldset: "childPostGroup",
     },
     {
       name: "image",
@@ -101,20 +102,22 @@ export default {
           type: "youtube",
         },
         {
-          type: 'reference',
-          title: 'Instagram Post',
-          to: [{
-            type: 'instagrampost'
-          }]
-        }
+          type: "reference",
+          title: "Instagram Post",
+          to: [
+            {
+              type: "instagrampost",
+            },
+          ],
+        },
       ],
     },
   ],
   preview: {
     select: {
-      title: 'title',
-      media: 'image',
-      subtitle: 'category.title'
-    }
-  }
-}
+      title: "title",
+      media: "image",
+      subtitle: "category.title",
+    },
+  },
+};
