@@ -8,6 +8,7 @@ import { AllPosts } from "~/model/queries/post";
 import { InferType } from "groqd";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useQuery } from "~/model/sanity/sanity.loader";
+import { Layout } from "~/components/layout";
 
 export const meta: MetaFunction = () => {
   return [
@@ -32,7 +33,7 @@ export default function Index() {
   );
 
   return (
-    <div>
+    <Layout>
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
       {data?.map((post) => (
         <div key={post.slug}>
@@ -41,6 +42,6 @@ export default function Index() {
           </Link>
         </div>
       ))}
-    </div>
+    </Layout>
   );
 }
