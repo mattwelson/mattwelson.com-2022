@@ -1,7 +1,10 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { InferType } from "groqd";
-import { Layout } from "~/components/layout";
+import slugify from "slugify";
+import { DateTime } from "luxon";
+import { Layout, PostDescription } from "~/components/layout";
+import { Image } from "~/components/image";
 import { PortableText } from "~/components/sanity/PortableText";
 import { Post } from "~/model/queries/post";
 import { loadQuery, useQuery } from "~/model/sanity/sanity.loader";
@@ -18,7 +21,7 @@ export default function Index() {
   const { initial } = useLoaderData<typeof loader>();
 
   const { data } = useQuery<InferType<typeof Post>>(Post.query, undefined, {
-    initial,
+    initial: initial as any,
   });
 
   console.log({ data });
@@ -27,7 +30,8 @@ export default function Index() {
 
   return (
     <Layout>
-      <h1 className="text-3xl font-bold">{data?.title}</h1>
+      <div className="mt-8" />
+      <PostDescription post={data} />
       <PortableText value={data.content} />
     </Layout>
   );

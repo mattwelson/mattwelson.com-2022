@@ -5,7 +5,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <header className="grid-cols-layout grid bg-slate-700 py-4 text-white [&>*]:col-start-2">
-        <Link to="/">Matt Welson</Link>
+        <Link to="/" className="font-sans text-lg font-bold  ">
+          Matt Welson
+        </Link>
       </header>
       <div className="grid-cols-layout prose grid max-w-none [&>*]:col-start-2">
         {children}
