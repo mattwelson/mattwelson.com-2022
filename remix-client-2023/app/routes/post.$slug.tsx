@@ -24,7 +24,7 @@ export default function Index() {
     initial: initial as any,
   });
 
-  console.log({ data });
+  console.log({ data, initial });
 
   if (!data) throw new Error("No Posts Found");
 
