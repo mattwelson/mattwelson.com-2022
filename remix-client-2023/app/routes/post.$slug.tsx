@@ -8,6 +8,7 @@ import { Image } from "~/components/image";
 import { PortableText } from "~/components/sanity/PortableText";
 import { Post } from "~/model/queries/post";
 import { loadQuery, useQuery } from "~/model/sanity/sanity.loader";
+import { PortableTextBlockComponent } from "@portabletext/react";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   return json({
@@ -24,15 +25,13 @@ export default function Index() {
     initial: initial as any,
   });
 
-  console.log({ data, initial });
-
   if (!data) throw new Error("No Posts Found");
 
   return (
     <Layout>
       <div className="mt-8" />
       <PostDescription post={data} />
-      <PortableText value={data.content} />
+      <PortableText value={data.content as any[]} />
     </Layout>
   );
 }

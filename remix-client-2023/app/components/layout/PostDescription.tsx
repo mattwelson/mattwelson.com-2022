@@ -2,13 +2,15 @@ import { Link } from "@remix-run/react";
 import { InferType } from "groqd";
 import { DateTime } from "luxon";
 import slugify from "slugify";
-import { Post } from "~/model/queries/post";
+import { AllPosts, Post } from "~/model/queries/post";
 import { Image } from "~/components/image";
 
 export function PostDescription({
-  post: { category, image, title, date },
+  post: { category, image, title, date, slug },
+  isLink = false,
 }: {
-  post: InferType<typeof Post>;
+  post: InferType<typeof Post> | InferType<typeof AllPosts>[0];
+  isLink?: boolean;
 }) {
   return (
     <>
@@ -23,7 +25,13 @@ export function PostDescription({
             {category?.title}
           </h3>
         </Link>
-        <h1 className="lead mb-2">{title}</h1>
+        {isLink ? (
+          <Link to={`/post/${slug}`} className="no-underline">
+            <h1 className="lead mb-2">{title}</h1>
+          </Link>
+        ) : (
+          <h1 className="lead mb-2">{title}</h1>
+        )}
         <h4 className="mt-0 text-slate-700">
           {DateTime.fromISO(date).toFormat("dd MMMM yyyy")}
         </h4>

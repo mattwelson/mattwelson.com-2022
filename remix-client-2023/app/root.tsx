@@ -1,5 +1,5 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction } from "@remix-run/node";
+import { json, type LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -7,6 +7,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 
 import "~/tailwind.css";
@@ -15,7 +16,27 @@ export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
+export async function loader() {
+  return json({
+    ENV: {
+      SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
+      SANITY_DATASET: process.env.SANITY_DATASET,
+    },
+  });
+}
+
+interface ENV {
+  SANITY_PROJECT_ID: typeof process.env.SANITY_PROJECT_ID;
+  SANITY_DATASET: typeof process.env.SANITY_DATASET;
+}
+declare global {
+  interface Window {
+    ENV: ENV;
+  }
+}
+
 export default function App() {
+  const { ENV } = useLoaderData<typeof loader>();
   return (
     <html lang="en">
       <head>
@@ -29,6 +50,11 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(ENV)}`,
+          }}
+        />
       </body>
     </html>
   );

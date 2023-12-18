@@ -27,5 +27,34 @@ export const Post = q("*")
       .deref()
       .grab({ title: q.string(), colour: q.string() })
       .nullable(),
-    content: q.contentBlocks(),
+    content: q("content")
+      .filter()
+      .select({
+        '_type == "block"': ["{...}", q.contentBlock()],
+        '_type == "spotify"': [
+          "{...}",
+          q.object({
+            url: q.string(),
+            _key: q.string(),
+            _type: q.literal("spotify"),
+          }),
+        ],
+        '_type == "metaimage"': ["{...}", sanityImage("")],
+        // reference type is the inline instagram type
+        '_type == "reference"': ["{...}->", q.object({})],
+        '_type == "youtube"': [
+          "{...}",
+          q.object({
+            url: q.string(),
+            _key: q.string(),
+            _type: q.literal("youtube"),
+          }),
+        ],
+        default: {
+          _key: q.string(),
+          _type: ['"unsupported"', q.literal("unsupported")],
+          unsupportedType: ["_type", q.string()],
+        },
+      })
+      .nullable(),
   });
