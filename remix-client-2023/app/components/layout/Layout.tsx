@@ -1,7 +1,17 @@
 import { Link } from "@remix-run/react";
+import { InferType } from "groqd";
 import { FaGithub, FaInstagram } from "react-icons/fa";
+import { InstagramPosts } from "~/model/queries/instagram";
+import { Image } from "../image";
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({
+  children,
+  instagramPosts,
+}: {
+  children: React.ReactNode;
+  instagramPosts: InferType<typeof InstagramPosts>;
+}) {
+  console.log({ instagramPosts });
   return (
     <div className="grid min-h-screen grid-rows-[auto_1fr_auto] items-start">
       <header className="grid-cols-layout grid bg-slate-700 py-4 text-white [&>*]:col-start-2">
@@ -12,7 +22,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <div className="grid-cols-layout prose grid max-w-none [&>*]:col-start-2">
         {children}
       </div>
-      <footer className="grid-cols-layout mt-16 grid gap-8 bg-pink-800 pb-16 pt-8 text-white [&>*]:col-start-2">
+      <div className="mt-16 grid bg-slate-800 py-16">
+        <div className="mx-auto grid max-w-7xl md:grid-cols-2 lg:grid-cols-3">
+          {instagramPosts.map((post) => (
+            <div key={post.url}>
+              <Image image={post.image} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <footer className="grid-cols-layout grid gap-8 bg-pink-800 pb-16 pt-8 text-white [&>*]:col-start-2">
         <div className="col-start-2 grid grid-cols-2 justify-items-center">
           <a
             className="group grid justify-items-center transition-colors hover:dark:text-slate-200"
@@ -32,6 +51,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <FaInstagram className="text-4xl dark:text-white group-hover:dark:text-emerald-400" />
             @alice.adventuring
           </a>
+        </div>
+        <div className="text-center">
+          Made by Matt Welson, a big nerd. Built with Sanity.io, Remix.run and
+          loads of other cool projects from talented and clever people.
         </div>
         <div className="grid justify-items-center gap-8">
           <a

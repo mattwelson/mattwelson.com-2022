@@ -33,11 +33,11 @@ export default function Index() {
   );
 
   return (
-    <Layout>
+    <>
       <div className="mt-8" />
       {data?.map((post) => (
         <PostDescription post={post} isLink key={post.slug} />
       ))}
-    </Layout>
+    </>
   );
 }

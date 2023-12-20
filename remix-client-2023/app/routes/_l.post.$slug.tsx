@@ -28,10 +28,10 @@ export default function Index() {
   if (!data) throw new Error("No Posts Found");
 
   return (
-    <Layout>
+    <>
       <div className="mt-8" />
       <PostDescription post={data} />
       <PortableText value={data.content as any[]} />
-    </Layout>
+    </>
   );
 }
